@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-# This script displays a story based on the content of the file /etc/passwd, showing information about each user.
+# This script tells a story about the users in /etc/passwd file
 
-while IFS=':' read -r username _ userid _ homedir _ shell; do
-    echo "The user $username is part of the $userid gang, lives in $homedir and rides $shell. $userid's place is protected by the passcode x, more info about the user here: $username"
+while IFS=: read -r username password uid gid gecos home shell; do
+    uid_info=$(getent passwd "$uid")
+
+    printf "The user %s is part of the %s gang, lives in %s and rides %s. %s's place is protected by the passcode %s, more info about the user here: %s\n" \
+    "$username" "$gid" "$home" "$shell" "$uid" "$password" "$uid_info"
 done < /etc/passwd
