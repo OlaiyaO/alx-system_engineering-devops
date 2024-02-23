@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Beheads the process named "7-highlander" using SIGKILL
+
+pid=$(pgrep -f "7-highlander")
+if [ -n "$pid" ]; then
+    kill -9 "$pid"
+fi
