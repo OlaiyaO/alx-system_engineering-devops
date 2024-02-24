@@ -15,7 +15,7 @@ start_process() {
 }
 
 stop_process() {
-    PID=$(cat "$PID_FILE")
+    PID=(cat "$PID_FILE")
 
     kill "$PID"
 
