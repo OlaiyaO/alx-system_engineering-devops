@@ -41,7 +41,7 @@ restart_process() {
     echo "manage_my_process restarted"
 }
 
-case "$1" in
+case "${1}" in
     start)
         start_process
         ;;
