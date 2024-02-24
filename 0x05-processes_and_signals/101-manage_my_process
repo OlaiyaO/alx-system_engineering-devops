@@ -22,8 +22,6 @@ stop_process() {
         rm "$PID_FILE"
 
         echo "manage_my_process stopped"
-    else
-        echo "No process is currently running"
     fi
 }
 
