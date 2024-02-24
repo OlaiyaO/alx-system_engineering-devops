@@ -25,9 +25,18 @@ stop_process() {
 }
 
 restart_process() {
-    stop_process > /dev/null 2>&1
+    PID=$(cat "$PID_FILE")
 
-    start_process > /dev/null 2>&1
+    kill "$PID"
+
+    rm "$PID_FILE"
+	
+    ./manage_my_process &
+
+    PID=$!
+
+    touch "$PID_FILE"
+    echo "$PID" > "$PID_FILE"
 
     echo "manage_my_process restarted"
 }
