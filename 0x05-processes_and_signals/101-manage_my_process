@@ -14,15 +14,13 @@ start_process() {
 }
 
 stop_process() {
-    if [ -f "$PID_FILE" ]; then
-        PID=$(cat "$PID_FILE")
+    PID=$(cat "$PID_FILE")
 
-        kill "$PID"
+    kill "$PID"
 
-        rm "$PID_FILE"
+    rm "$PID_FILE"
 
-        echo "manage_my_process stopped"
-    fi
+    echo "manage_my_process stopped"
 }
 
 restart_process() {
