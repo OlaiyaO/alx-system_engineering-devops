@@ -1,44 +1,49 @@
 #!/usr/bin/env bash
-# Function to start the manage_my_process program
+# Define the PID file location
 
-start_manage_my_process() {
-    # Check if the process is already running
-    if [ -e /var/run/my_process.pid ]; then
-        echo "manage_my_process is already running."
-        return
-    fi
-    
+PID_FILE="/var/run/my_process.pid"
+
+start_process() {
     ./manage_my_process &
-    echo $! > /var/run/my_process.pid
+
+    PID=$!
+
+    echo "$PID" > "$PID_FILE"
+
     echo "manage_my_process started"
 }
 
-stop_manage_my_process() {
-    if [ -e /var/run/my_process.pid ]; then
-        pid=$(cat /var/run/my_process.pid)
-        kill "$pid" 2>/dev/null
-        rm -f /var/run/my_process.pid
+stop_process() {
+    if [ -f "$PID_FILE" ]; then
+        PID=$(cat "$PID_FILE")
+
+        kill "$PID"
+
+        rm "$PID_FILE"
+
         echo "manage_my_process stopped"
     else
-        echo "manage_my_process is not running."
+        echo "No process is currently running"
     fi
 }
 
-restart_manage_my_process() {
-    stop_manage_my_process > /dev/null 2>&1
-    start_manage_my_process > /dev/null 2>&1
+restart_process() {
+    stop_process > /dev/null 2>&1
+
+    start_process > /dev/null 2>&1
+
     echo "manage_my_process restarted"
 }
 
 case "$1" in
     start)
-        start_manage_my_process
+        start_process
         ;;
     stop)
-        stop_manage_my_process
+        stop_process
         ;;
     restart)
-        restart_manage_my_process
+        restart_process
         ;;
     *)
         echo "Usage: $0 {start|stop|restart}"
