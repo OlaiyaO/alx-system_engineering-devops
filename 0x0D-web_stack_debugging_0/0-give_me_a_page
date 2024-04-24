@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 # This script starts the Apache2 service
+
+echo "relaxed_lewin localhost" >> /etc/apache2.conf
 sudo service apache2 start
