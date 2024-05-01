@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Creates a symbolic link for the default Nginx configuration, restarts Nginx, and removes the nginx.pid file.
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
+rm /run/nginx.pid
