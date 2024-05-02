@@ -45,3 +45,6 @@ backend JBbackend
         balance roundrobin
         server 530653-web-01 54.237.115.176:80 check
         server 530653-web-02 54.234.13.131:80 check
+
+backend letsencrypt-backend
+	server letsencrypt 127.0.0.1:54321
