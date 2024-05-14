@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-# creating backups and compressing databases
+# Define file name for the tar.gz archive
+file_name="$(date +'%d-%m-%Y').tar.gz"
 
-day=$(date +"%d")
-month=$(date +"%m")
-year=$(date +"%Y")
-file_name="$day-$month-$year.tar.gz"
-
+# Create MySQL dump for all databases
 mysqldump --all-databases -u root --password="$1" > backup.sql
+
+# Create tar.gz archive containing the backup.sql file
 tar -czvf "$file_name" backup.sql
