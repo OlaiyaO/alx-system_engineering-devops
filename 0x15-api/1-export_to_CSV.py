@@ -7,6 +7,7 @@ import csv
 import requests
 import sys
 
+
 if __name__ == "__main__":
     # Get user ID from command line argument
     employee_id = sys.argv[1]
@@ -17,11 +18,12 @@ if __name__ == "__main__":
     username = user.get("username")
 
     # Fetch todos for the user
-    todos = requests.get(base_url + "todos", params={"userId": employee_id}).json()
+    todos = requests.get(
+            base_url + "todos", params={"userId": employee_id}).json()
 
     # Write todos to CSV file
     with open("{}.csv".format(employee_id), "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         [csv_writer.writerow(
             [employee_id, username, task.get("completed"), task.get("title")]
-         ) for task in todos]
+            ) for task in todos]
