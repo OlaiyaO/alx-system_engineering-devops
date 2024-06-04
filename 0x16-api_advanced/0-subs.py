@@ -1,22 +1,25 @@
 #!/usr/bin/python3
+
 """
-number of subscribers for a given subreddit
+prints the titles of the first 10 hot posts listed for a given subreddit
 """
 
-import requests
+from requests import get
 
 
-def number_of_subscribers(subreddit):
+def top_ten(subreddit):
     """
-    function that queries the Reddit API and returns the number of subscribers
-    (not active users, total subscribers) for a given subreddit.
+    function that queries the Reddit API and prints the titles of the first
+    10 hot posts listed for a given subreddit
     """
-    if not subreddit or not isinstance(subreddit, str):
-        return 0
 
-    user_agent = {'User-Agent': 'linux:0x16.api.advanced:v1.0.0 (by /u/JB)'}
-    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    
+    if subreddit is None or not isinstance(subreddit, str):
+        print("None")
+
+    user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
+    params = {'limit': 10}
+    url = 'https://www.reddit.com/r/{}/hot/.json'.format(subreddit)
+
     try:
         response = requests.get(url, headers=user_agent, allow_redirects=False)
         if response.status_code != 200:
