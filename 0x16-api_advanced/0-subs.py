@@ -1,34 +1,19 @@
 #!/usr/bin/python3
-
 """
-prints the titles of the first 10 hot posts listed for a given subreddit
+Script that queries subscribers on a given Reddit subreddit.
 """
 
-from requests import get
+import requests
 
 
-def top_ten(subreddit):
-    """
-    function that queries the Reddit API and prints the titles of the first
-    10 hot posts listed for a given subreddit
-    """
-
-    if subreddit is None or not isinstance(subreddit, str):
-        print("None")
-
-    user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
-    params = {'limit': 10}
-    url = 'https://www.reddit.com/r/{}/hot/.json'.format(subreddit)
-
-    try:
-        response = requests.get(url, headers=user_agent, allow_redirects=False)
-        if response.status_code != 200:
-            return 0
-
-        results = response.json()
-        return results.get('data', {}).get('subscribers', 0)
-    
-    except requests.RequestException:
-        return 0
-    except ValueError:  # JSON decoding failed
+def number_of_subscribers(subreddit):
+    """Return the total number of subscribers on a given subreddit."""
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {"User-Agent": "Mozilla/5.0"}
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 200:
+        data = response.json()
+        subscribers = data['data']['subscribers']
+        return subscribers
+    else:
         return 0
